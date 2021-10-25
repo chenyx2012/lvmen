@@ -81,60 +81,6 @@ def get_copyrights(location, deadline=sys.maxsize, **kwargs):
     return results
 
 
-# def get_emails(location, threshold=50, test_slow_mode=False, test_error_mode=False, **kwargs):
-#     """
-#     Return a mapping with a single 'emails' key with a value that is a list of
-#     mappings for emails detected in the file at `location`.
-#     Return only up to `threshold` values. Return all values if `threshold` is 0.
-#
-#     If test_mode is True, the scan will be slow for testing purpose and pause
-#     for one second.
-#     """
-#     if test_error_mode:
-#         raise ScancodeError('Triggered email failure')
-#
-#     if test_slow_mode:
-#         import time
-#         time.sleep(1)
-#
-#     from cluecode.finder import find_emails
-#     results = []
-#
-#     found_emails = ((em, ln) for (em, ln) in find_emails(location) if em)
-#     if threshold:
-#         found_emails = islice(found_emails, threshold)
-#
-#     for email, line_num in found_emails:
-#         result = {}
-#         results.append(result)
-#         result['email'] = email
-#         result['start_line'] = line_num
-#         result['end_line'] = line_num
-#     return dict(emails=results)
-
-
-# def get_urls(location, threshold=50, **kwargs):
-#     """
-#     Return a mapping with a single 'urls' key with a value that is a list of
-#     mappings for urls detected in the file at `location`.
-#     Return only up to `threshold` values. Return all values if `threshold` is 0.
-#     """
-#     from cluecode.finder import find_urls
-#     results = []
-#
-#     found_urls = ((u, ln) for (u, ln) in find_urls(location) if u)
-#     if threshold:
-#         found_urls = islice(found_urls, threshold)
-#
-#     for urls, line_num in found_urls:
-#         result = {}
-#         results.append(result)
-#         result['url'] = urls
-#         result['start_line'] = line_num
-#         result['end_line'] = line_num
-#     return dict(urls=results)
-
-
 SPDX_LICENSE_URL = 'https://spdx.org/licenses/{}'
 DEJACODE_LICENSE_URL = 'https://enterprise.dejacode.com/urn/urn:dje:license:{}'
 SCANCODE_LICENSEDB_URL = 'https://scancode-licensedb.aboutcode.org/{}'
@@ -284,69 +230,6 @@ def _licenses_data_from_match(
 
 
 SCANCODE_DEBUG_PACKAGE_API = os.environ.get('SCANCODE_DEBUG_PACKAGE_API', False)
-
-
-# def _get_package_manifests(location):
-#     """
-#     Return a mapping of package manifest information detected in the file at `location`.
-#
-#     Note that all exceptions are caught if there are any errors while parsing a
-#     package manifest.
-#     """
-#     from packagedcode.recognize import recognize_package_manifests
-#     try:
-#         recognized_package_manifests = recognize_package_manifests(location)
-#         if recognized_package_manifests:
-#             return recognized_package_manifests
-#     except Exception as e:
-#         if TRACE:
-#             logger.error('_get_package_manifests: {}: Exception: {}'.format(location, e))
-#
-#         if SCANCODE_DEBUG_PACKAGE_API:
-#             raise
-#         else:
-#             # attention: we are swallowing ALL exceptions here!
-#             pass
-
-
-# def get_package_info(location, **kwargs):
-#     """
-#     Return a mapping of package information detected in the file at `location`.
-#
-#     This API function is DEPRECATED, use `get_package_manifests` instead.
-#     """
-#     import warnings
-#     warnings.warn(
-#         "`get_package_info` is deprecated. Use `get_package_manifests` instead.",
-#         DeprecationWarning,
-#         stacklevel=1
-#     )
-#
-#     recognized_packages = _get_package_manifests(location)
-#
-#     if recognized_packages:
-#         return dict(packages=[
-#             packages.to_dict()
-#             for packages in recognized_packages
-#         ])
-#
-#     return dict(packages=[])
-
-
-# def get_package_manifests(location, **kwargs):
-#     """
-#     Return a mapping of package manifest information detected in the file at `location`.
-#     """
-#     recognized_package_manifests = _get_package_manifests(location)
-#
-#     if recognized_package_manifests:
-#         return dict(package_manifests=[
-#             package_manifests.to_dict()
-#             for package_manifests in recognized_package_manifests
-#         ])
-#
-#     return dict(package_manifests=[])
-
 
 def get_file_info(location, **kwargs):
     """
