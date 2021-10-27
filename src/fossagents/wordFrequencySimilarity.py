@@ -62,6 +62,7 @@ class WordFrequencySimilarity(AtarashiAgent):
       globalCount = 0
       result = 0
       for idx in range(len(licensesFrequency)):
+        tempCount = 0
         for word, processedLicenseWordFreq in processedLicense.items():
           licenseWordFreq = licensesFrequency[idx].get(word, 0)
           if min(licenseWordFreq, processedLicenseWordFreq) > 0:
