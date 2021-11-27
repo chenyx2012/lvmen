@@ -104,17 +104,21 @@ def build_scanner_obj(processedLicense, agent_name, similarity="CosineSim",
   return scanner
 
 
-def run_scan(scanner, inputFile):
+def run_scan(scanner, inputFile, method):
   '''
   Perform the actual scan on input file.
   :param scanner: Scanner agent object
   :param inputFile: File to be scanned
   :return: Returns the array of JSON with scan results
   '''
-  if (os.path.isfile(inputFile)):
-    return scanner.scan(inputFile)
-  else:
-    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), inputFile)
+  if method == 'file':
+    if (os.path.isfile(inputFile)):
+      return scanner.scan(inputFile, method)
+    else:
+      raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), inputFile)
+  elif method == 'text':
+    return scanner.scan(inputFile, method)
+
 
 
 def main():
@@ -145,7 +149,7 @@ def main():
   # inputPath = args.inputPath
   inputPath = "D:/IDEWORK/fossology/atarashi-master/atarashi/license/license_merger.py"
   # inputPath = "D:/IDEWORK/fossology/atarashi-master"
-  agent_name = "tfidf"
+  agent_name = "wordFrequencySimilarity"
   similarity = "CosineSim"
   verbose = "0"
   processedLicense = None

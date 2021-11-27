@@ -30,6 +30,7 @@ import time
 from numpy import unique, sum, dot
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+from libs.commentPreprocessor import CommentPreprocessor
 from src.fossagents.atarashiAgent import AtarashiAgent
 from src.libs.initialmatch import initial_match
 from src.libs.utils import l2_norm
@@ -61,15 +62,20 @@ class TFIDF(AtarashiAgent):
     else:
       return dot_product / temp
 
-  def __tfidfsumscore(self, inputFile):
+  def __tfidfsumscore(self, inputFile, method):
     '''
     TF-IDF Sum Score Algorithm. Used TfidfVectorizer to implement it.
 
     :param inputFile: Input file path
     :return: Sorted array of JSON of scanner results with sim_type as __tfidfsumscore
     '''
-    processedData1 = super().loadFile(inputFile)
-    matches = initial_match(self.commentFile, processedData1, self.licenseList)
+    if method == 'file':
+      processedData1 = super().loadFile(inputFile)
+      matches = initial_match(self.commentFile, processedData1, self.licenseList)
+    else:
+      matches = []
+      licenseText = inputFile.replace('\n', ' ')
+      processedData1 = CommentPreprocessor.preprocess(licenseText)
 
     startTime = time.time()
 
@@ -103,15 +109,21 @@ class TFIDF(AtarashiAgent):
       print("time taken is " + str(time.time() - startTime) + " sec")
     return matches
 
-  def __tfidfcosinesim(self, inputFile):
+  def __tfidfcosinesim(self, inputFile, method):
     '''
     TF-IDF Cosine Similarity Algorithm. Used TfidfVectorizer to implement it.
 
     :param inputFile: Input file path
     :return: Sorted array of JSON of scanner results with sim_type as __tfidfcosinesim
     '''
-    processedData1 = super().loadFile(inputFile)
-    matches = initial_match(self.commentFile, processedData1, self.licenseList)
+    if method == 'file':
+      processedData1 = super().loadFile(inputFile)
+      matches = initial_match(self.commentFile, processedData1, self.licenseList)
+    else:
+      licenseText = inputFile.replace('\n', ' ')
+      processedData1 = CommentPreprocessor.preprocess(licenseText)
+      matches = []
+
 
     startTime = time.time()
 
@@ -136,11 +148,11 @@ class TFIDF(AtarashiAgent):
       print("time taken is " + str(time.time() - startTime) + " sec")
     return matches
 
-  def scan(self, filePath):
+  def scan(self, filePath, method):
     if self.algo == self.TfidfAlgo.cosineSim:
-      return self.__tfidfcosinesim(filePath)
+      return self.__tfidfcosinesim(filePath, method)
     elif self.algo == self.TfidfAlgo.scoreSim:
-      return self.__tfidfsumscore(filePath)
+      return self.__tfidfsumscore(filePath, method)
     else:
       return -1
 

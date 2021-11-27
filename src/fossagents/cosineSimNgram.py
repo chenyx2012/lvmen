@@ -27,6 +27,7 @@ import os
 from numpy import unique
 import textdistance
 
+from libs.commentPreprocessor import CommentPreprocessor
 from src.fossagents.atarashiAgent import AtarashiAgent
 from src.libs.initialmatch import initial_match
 from src.libs.utils import wordFrequency, cosine_similarity
@@ -85,7 +86,7 @@ class NgramAgent(AtarashiAgent):
     '''
     return [s[i:i + 2] for i in range(len(s) - 1)]
 
-  def scan(self, inputFile):
+  def scan(self, inputFile, method):
     '''
     :param inputFile: Input file path that needs to be scanned
     :return: Array of JSON with the output of scan of the file.
@@ -100,8 +101,14 @@ class NgramAgent(AtarashiAgent):
     | desc       | Description/ comments for the similarity measure          |
     +------------+-----------------------------------------------------------+
     '''
-    processedData = super().loadFile(inputFile)
-    matches = initial_match(self.commentFile, processedData, self.licenseList)
+    if method == 'file':
+      processedData = super().loadFile(inputFile)
+      matches = initial_match(self.commentFile, processedData, self.licenseList)
+    else:
+      licenseText = inputFile.replace('\n', ' ')
+      processedData = CommentPreprocessor.preprocess(licenseText)
+      matches = []
+
 
     # Full text Bi-gram Cosine Similarity Match
     Cosine_matches = []
