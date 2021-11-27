@@ -24,8 +24,8 @@ __email__ = "gmishx@gmail.com"
 
 from abc import ABCMeta, abstractmethod
 
-from src.libs.commentPreprocessor import CommentPreprocessor
-from src.license.licenseLoader import LicenseLoader
+from libs.commentPreprocessor import CommentPreprocessor
+from license.licenseLoader import LicenseLoader
 
 
 class AtarashiAgent(object):

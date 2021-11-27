@@ -18,16 +18,18 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 """
+
+
 from pkg_resources import resource_filename
 import argparse
 import errno
 import json
 import os
 
-from src.fossagents.cosineSimNgram import NgramAgent
-from src.fossagents.dameruLevenDist import DameruLevenDist
-from src.fossagents.tfidf import TFIDF
-from src.fossagents.wordFrequencySimilarity import WordFrequencySimilarity
+from fossagents.cosineSimNgram import NgramAgent
+from fossagents.dameruLevenDist import DameruLevenDist
+from fossagents.tfidf import TFIDF
+from fossagents.wordFrequencySimilarity import WordFrequencySimilarity
 
 __author__ = "Aman Jain"
 __email__ = "amanjain5221@gmail.com"
@@ -215,4 +217,6 @@ def main():
 
 
 if __name__ == '__main__':
+  import sys
+  sys.path.append(os.path.dirname(sys.path[0]))
   main()

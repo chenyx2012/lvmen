@@ -25,7 +25,7 @@ import sys
 from pyxdameraulevenshtein import damerau_levenshtein_distance
 
 from libs.commentPreprocessor import CommentPreprocessor
-from src.fossagents.atarashiAgent import AtarashiAgent, exactMatcher
+from fossagents.atarashiAgent import AtarashiAgent, exactMatcher
 
 __author__ = "Aman Jain"
 __email__ = "amanjain5221@gmail.com"

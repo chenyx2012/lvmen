@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import json
 import os
 import time
@@ -144,4 +143,6 @@ def main():
     return return_code
 
 if __name__ == '__main__':
+    import sys
+    sys.path.append(os.path.dirname(sys.path[0]))
     main()

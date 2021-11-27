@@ -26,8 +26,8 @@ import argparse
 import re
 
 from libs.commentPreprocessor import CommentPreprocessor
-from src.fossagents.atarashiAgent import AtarashiAgent, exactMatcher
-from src.libs.utils import wordFrequency
+from fossagents.atarashiAgent import AtarashiAgent, exactMatcher
+from libs.utils import wordFrequency
 
 
 class WordFrequencySimilarity(AtarashiAgent):

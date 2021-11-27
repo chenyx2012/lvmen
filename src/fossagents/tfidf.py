@@ -31,9 +31,9 @@ from numpy import unique, sum, dot
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 from libs.commentPreprocessor import CommentPreprocessor
-from src.fossagents.atarashiAgent import AtarashiAgent
-from src.libs.initialmatch import initial_match
-from src.libs.utils import l2_norm
+from fossagents.atarashiAgent import AtarashiAgent
+from libs.initialmatch import initial_match
+from libs.utils import l2_norm
 
 
 def tokenize(data): return data.split(" ")

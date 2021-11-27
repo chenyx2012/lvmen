@@ -28,9 +28,9 @@ from numpy import unique
 import textdistance
 
 from libs.commentPreprocessor import CommentPreprocessor
-from src.fossagents.atarashiAgent import AtarashiAgent
-from src.libs.initialmatch import initial_match
-from src.libs.utils import wordFrequency, cosine_similarity
+from fossagents.atarashiAgent import AtarashiAgent
+from libs.initialmatch import initial_match
+from libs.utils import wordFrequency, cosine_similarity
 
 __author__ = "Aman Jain"
 __email__ = "amanjain5221@gmail.com"
