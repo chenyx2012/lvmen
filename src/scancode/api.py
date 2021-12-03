@@ -178,10 +178,12 @@ def _licenses_data_from_match(
         lic = licenses.get(license_key)
         result = {}
         detected_licenses.append(result)
+        result['start_line'] = match.start_line
+        result['end_line'] = match.end_line
+        result['shortname'] = lic.short_name
+        result['fullname'] = lic.name
+        result['sim_score'] = match.score()
         result['key'] = lic.key
-        result['score'] = match.score()
-        result['name'] = lic.name
-        result['short_name'] = lic.short_name
         result['category'] = lic.category
         result['is_exception'] = lic.is_exception
         result['is_unknown'] = lic.is_unknown
@@ -205,8 +207,6 @@ def _licenses_data_from_match(
         else:
             spdx_url = ''
         result['spdx_url'] = spdx_url
-        result['start_line'] = match.start_line
-        result['end_line'] = match.end_line
         matched_rule = result['matched_rule'] = {}
         matched_rule['identifier'] = match.rule.identifier
         matched_rule['license_expression'] = match.rule.license_expression

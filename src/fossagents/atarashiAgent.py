@@ -41,10 +41,10 @@ class AtarashiAgent(object):
     self.verbose = verbose
 
   def loadFile(self, filePath):
-    self.commentFile = CommentPreprocessor.extract(filePath)
+    self.commentFile, startLine, endLine = CommentPreprocessor.extract(filePath)
     with open(self.commentFile) as file:
       data = file.read().replace('\n', ' ')
-    return CommentPreprocessor.preprocess(data)
+    return CommentPreprocessor.preprocess(data), startLine, endLine
 
   def getVerbose(self):
     return self.verbose
@@ -69,7 +69,11 @@ def exactMatcher(licenseText, licenses):
 
   for idx in range(len(licenses)):
     if licenses.iloc[idx]['processed_text'] in licenseText and licenses.iloc[idx]['shortname'] != 'Void':
-      output.append(licenses.iloc[idx]['shortname'])
+      license = {
+        "shortname": licenses.iloc[idx]['shortname'],
+        "fullname": licenses.iloc[idx]['fullname'],
+      }
+      output.append(license)
   if not output:
     return -1
   return output

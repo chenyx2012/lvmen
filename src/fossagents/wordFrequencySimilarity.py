@@ -40,7 +40,7 @@ class WordFrequencySimilarity(AtarashiAgent):
     :return: License short name with maximum intersection with word frequency of licenses
     '''
     if method == 'file':
-      processedData = super().loadFile(filePath)
+      processedData, startLine, endLine = super().loadFile(filePath)
       if self.verbose > 0:
         print("PROCESSED DATA IS ", processedData)
         print("LICENSES[0]", str(self.licenseList.iloc[0]))
@@ -78,7 +78,10 @@ class WordFrequencySimilarity(AtarashiAgent):
         if self.verbose > 0:
           print("Result is license with ID", result)
         return [{
+          "start_line": startLine,
+          "end_line": endLine,
           "shortname": str(self.licenseList.at[result, 'shortname']),
+          "fullname": str(self.licenseList.at[result, 'fullname']),
           "sim_score": 1,
           "sim_type": "wordFrequencySimilarity",
           "description": ""
@@ -86,9 +89,12 @@ class WordFrequencySimilarity(AtarashiAgent):
 
       else:
         result = []
-        for shortname in temp:
+        for license in temp:
           result.append({
-            "shortname": str(shortname),
+            "start_line": startLine,
+            "end_line": endLine,
+            "shortname": str(license['shortname']),
+            "fullname": str(license['fullname']),
             "sim_score": 1,
             "sim_type": "wordFrequencySimilarity",
             "description": "exact match"
@@ -128,6 +134,8 @@ class WordFrequencySimilarity(AtarashiAgent):
       if self.verbose > 0:
         print("Result is license with ID", result)
       return [{
+        "start_line": "",
+        "end_line": "",
         "shortname": str(self.licenseList.at[result, 'shortname']),
         "fullname":str(self.licenseList.at[result, 'fullname']),
         "text":str(self.licenseList.at[result, 'text']),

@@ -101,9 +101,11 @@ class NgramAgent(AtarashiAgent):
     | desc       | Description/ comments for the similarity measure          |
     +------------+-----------------------------------------------------------+
     '''
+    startLine = ""
+    endLine = ""
     if method == 'file':
-      processedData = super().loadFile(inputFile)
-      matches = initial_match(self.commentFile, processedData, self.licenseList)
+      processedData, startLine, endLine = super().loadFile(inputFile)
+      matches = initial_match(self.commentFile, processedData, self.licenseList, startLine, endLine)
     else:
       licenseText = inputFile.replace('\n', ' ')
       processedData = CommentPreprocessor.preprocess(licenseText)
@@ -135,7 +137,10 @@ class NgramAgent(AtarashiAgent):
             wordFrequency(processedData.split(" ")))
         if cosineSim >= 0.6:
           Cosine_matches.append({
+            'start_line': startLine,
+            'end_line': endLine,
             'shortname': self.licenseList.iloc[idx]['shortname'],
+            'fullname': self.licenseList.iloc[idx]['fullname'],
             'sim_type': 'CosineSim',
             'sim_score': cosineSim,
             'description': ''
@@ -149,7 +154,10 @@ class NgramAgent(AtarashiAgent):
                                         processedData.split(" "))
         if diceSim >= 0.6:
           Dice_matches.append({
+            'start_line': startLine,
+            'end_line': endLine,
             'shortname': self.licenseList.iloc[idx]['shortname'],
+            'fullname': self.licenseList.iloc[idx]['fullname'],
             'sim_type': 'DiceSim',
             'sim_score': diceSim,
             'description': ''
@@ -163,7 +171,10 @@ class NgramAgent(AtarashiAgent):
             wordFrequency(self.__bigram_tokenize(processedData)))
         if bigram_cosine_sim >= 0.9:
           Bigram_cosine_matches.append({
+            'start_line': startLine,
+            'end_line': endLine,
             'shortname': self.licenseList.iloc[idx]['shortname'],
+            'fullname': self.licenseList.iloc[idx]['fullname'],
             'sim_type': 'BigramCosineSim',
             'sim_score': bigram_cosine_sim,
             'description': ''

@@ -38,13 +38,15 @@ def licenseComment(data):
   match_list = ['source', 'free', 'under', 'use',  'copyright', 'grant', 'software', 'license', 'licence', 'agreement', 'distribute', 'redistribution', 'liability', 'rights', 'reserved', 'general', 'public', 'modify', 'modified', 'modification', 'permission', 'permitted' 'granted', 'distributed', 'notice', 'distribution', 'terms', 'freely', 'licensed', 'merchantibility', 'redistributed', 'see', 'read', '(c)', 'copying', 'legal', 'licensing', 'spdx']
 
   MLmapCount, CSLmapCount, SLmapCount = [], [], []
+  startLine = ""
+  endLine = ""
   comment = ""
   tempCount = 0
   if "multi_line_comment" in data:
     for id, item in enumerate(data["multi_line_comment"]):
       count = 0
       if 'spdx-license-identifier' in item['comment'].lower():
-        return item['comment']
+        return item['comment'], item['start_line'], item['end_line']
 
       for i in match_list:
         if i in item['comment'].lower():
@@ -53,12 +55,14 @@ def licenseComment(data):
       if count > tempCount:
         tempCount = count
         comment = item['comment']
+        startLine = item['start_line']
+        endLine = item['end_line']
 
   if "cont_single_line_comment" in data:
     for id, item in enumerate(data["cont_single_line_comment"]):
       count = 0
       if 'spdx-license-identifier' in item['comment'].lower():
-        return item['comment']
+        return item['comment'], item['start_line'], item['end_line']
 
       for i in match_list:
         if i in item['comment'].lower():
@@ -67,12 +71,14 @@ def licenseComment(data):
       if count > tempCount:
         tempCount = count
         comment = item['comment']
+        startLine = item['start_line']
+        endLine = item['end_line']
 
   if "single_line_comment" in data:
     for id, item in enumerate(data["single_line_comment"]):
       count = 0
       if 'spdx-license-identifier' in item['comment'].lower():
-        return item['comment']
+        return item['comment'], item['start_line'], item['end_line']
 
       for i in match_list:
         if i in item['comment'].lower():
@@ -81,8 +87,10 @@ def licenseComment(data):
       if count > tempCount:
         tempCount = count
         comment = item['comment']
+        startLine = item['start_line']
+        endLine = item['end_line']
 
-  return comment
+  return comment, startLine, endLine
 
 
 class CommentPreprocessor(object):
@@ -130,7 +138,7 @@ class CommentPreprocessor(object):
       if fileType in supportedFileExtensions:
         data_file = commentExtract(inputFile)
         data = json.loads(data_file)
-        data1 = licenseComment(data)
+        data1, startLine, endLine = licenseComment(data)
         outFile.write(data1)
       else:
         # if file extension is not supported
@@ -140,7 +148,7 @@ class CommentPreprocessor(object):
             outFile.write(line + '\n')
 
     os.close(fd)
-    return outputFile
+    return outputFile, startLine, endLine
 
 
 if __name__ == "__main__":

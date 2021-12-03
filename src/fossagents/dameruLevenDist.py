@@ -43,7 +43,7 @@ class DameruLevenDist(AtarashiAgent):
     :return: Returns the license's short name with least damerau levenshtien distance
     '''
     if method == 'file':
-      processedData = super().loadFile(filePath)
+      processedData, startLine, endLine = super().loadFile(filePath)
 
       temp = exactMatcher(processedData, self.licenseList)
       if temp == -1:
@@ -60,20 +60,27 @@ class DameruLevenDist(AtarashiAgent):
             result = idx
 
         return [{
+          "start_line": startLine,
+          "end_line": endLine,
           "shortname": str(self.licenseList.iloc[result]['shortname']),
+          "fullname": str(self.licenseList.at[result, 'fullname']),
           "sim_score": 1,
           "sim_type": "dld",
           "description": ""
         }]
       else:
         result = []
-        for shortname in temp:
+        for license in temp:
           result.append({
-            "shortname": str(shortname),
+            "start_line": startLine,
+            "end_line": endLine,
+            "shortname": str(license['shortname']),
+            "fullname": str(license['fullname']),
             "sim_score": 1,
             "sim_type": "dld",
             "description": "exact match"
           })
+        return result
     elif method == 'text':
       licenseText = filePath.replace('\n', ' ')
       licenseText = CommentPreprocessor.preprocess(licenseText)
@@ -90,7 +97,10 @@ class DameruLevenDist(AtarashiAgent):
           result = idx
 
       return [{
+        "start_line": "",
+        "end_line": "",
         "shortname": str(self.licenseList.iloc[result]['shortname']),
+        "fullname": str(self.licenseList.at[result, 'fullname']),
         "sim_score": 1,
         "sim_type": "dld",
         "description": ""

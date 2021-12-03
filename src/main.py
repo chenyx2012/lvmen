@@ -6,7 +6,7 @@ import time
 from pkg_resources import resource_filename
 import argparse
 
-from diff.text_diff import getFileDiff
+# from diff.text_diff import getFileDiff
 from fossscan.atarashii import build_scanner_obj, run_scan, __version__
 from scancode import api
 
@@ -47,12 +47,7 @@ def main():
 
     return_code = 0
     # 判断算法
-    if agent_name == "fileDiff":
-        diffPath1 = args.diffPath1
-        diffPath2 = args.diffPath2
-        result = getFileDiff(diffPath1,diffPath2)
-        print(result)
-    elif agent_name == "scancode":
+    if agent_name == "scancode":
         inputPath = args.inputPath
         if os.path.isfile(inputPath):
             result = api.get_licenses(inputPath)
@@ -97,8 +92,8 @@ def main():
                     return_code |= 4
 
                 result = list(result)
-                result = {"file": os.path.abspath(inputPath), "results": result}
-                result = json.dumps(result, sort_keys=True, ensure_ascii=False, indent=4)
+                result = {"file": os.path.abspath(inputPath), "licenses": result}
+                result = json.dumps(result, sort_keys=False, ensure_ascii=False, indent=4)
                 print(result + "\n")
 
             elif os.path.isdir(inputPath):
@@ -122,7 +117,7 @@ def main():
                             print(",", end="")
                         else:
                             printComma = True
-                        print(json.dumps(result, sort_keys=True, ensure_ascii=False))
+                        print(json.dumps(result, sort_keys=False, ensure_ascii=False))
                 print("]")
 
             else:

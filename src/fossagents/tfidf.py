@@ -69,9 +69,11 @@ class TFIDF(AtarashiAgent):
     :param inputFile: Input file path
     :return: Sorted array of JSON of scanner results with sim_type as __tfidfsumscore
     '''
+    startLine = ""
+    endLine = ""
     if method == 'file':
-      processedData1 = super().loadFile(inputFile)
-      matches = initial_match(self.commentFile, processedData1, self.licenseList)
+      processedData1, startLine, endLine = super().loadFile(inputFile)
+      matches = initial_match(self.commentFile, processedData1, self.licenseList, startLine, endLine)
     else:
       matches = []
       licenseText = inputFile.replace('\n', ' ')
@@ -96,10 +98,12 @@ class TFIDF(AtarashiAgent):
                                     start=0):
       sim_score = sum(value)
       score_arr.append({
-        'shortname': self.licenseList.iloc[counter]['shortname'],
+        'start_line': startLine,
+        'end_line': endLine,
+        'shortname': str(self.licenseList.iloc[result]['shortname']),
+        'fullname': str(self.licenseList.iloc[result]['fullname']),
         'sim_type': "Sum of TF-IDF score",
         'sim_score': sim_score,
-
         'desc': "Score can be greater than 1 also"
       })
     score_arr.sort(key=lambda x: x['sim_score'], reverse=True)
@@ -116,9 +120,11 @@ class TFIDF(AtarashiAgent):
     :param inputFile: Input file path
     :return: Sorted array of JSON of scanner results with sim_type as __tfidfcosinesim
     '''
+    startLine = ""
+    endLine = ""
     if method == 'file':
-      processedData1 = super().loadFile(inputFile)
-      matches = initial_match(self.commentFile, processedData1, self.licenseList)
+      processedData1, startLine, endLine = super().loadFile(inputFile)
+      matches = initial_match(self.commentFile, processedData1, self.licenseList, startLine, endLine)
     else:
       licenseText = inputFile.replace('\n', ' ')
       processedData1 = CommentPreprocessor.preprocess(licenseText)
@@ -138,7 +144,10 @@ class TFIDF(AtarashiAgent):
       sim_score = self.__cosine_similarity(value, search_martix)
       if sim_score >= 0.3:
         matches.append({
-          'shortname': self.licenseList.iloc[counter]['shortname'],
+          'start_line': startLine,
+          'end_line': endLine,
+          'shortname': str(self.licenseList.iloc[counter]['shortname']),
+          'fullname': str(self.licenseList.iloc[counter]['fullname']),
           'sim_type': "TF-IDF Cosine Sim",
           'sim_score': sim_score,
           'desc': ''

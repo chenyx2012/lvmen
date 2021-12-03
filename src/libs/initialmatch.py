@@ -81,7 +81,7 @@ def spdx_identifer(data, shortnames):
   return spdx_identifiers
 
 
-def initial_match(filePath, processedData, licenses):
+def initial_match(filePath, processedData, licenses, startLine, endLine):
   '''
   :param inputFile: Input file path
   :param licenseList: Processed License List path
@@ -103,7 +103,10 @@ def initial_match(filePath, processedData, licenses):
     if len(header) > 0:
       if header in processedData:
         exact_match_header.append({
+          'start_line': startLine,
+          'end_line': endLine,
           'shortname': licenses.iloc[idx]['shortname'],
+          'fullname': licenses.iloc[idx]['fullname'],
           'sim_type': 'ExactHeader',
           'sim_score': 1.0,
           'description': ''
@@ -111,7 +114,10 @@ def initial_match(filePath, processedData, licenses):
       ngram_sim = HeadersNgramSim(header, processedData)
       if ngram_sim >= 0.7:
         header_sim_match.append({
+          'start_line': startLine,
+          'end_line': endLine,
           'shortname': licenses.iloc[idx]['shortname'],
+          'fullname': licenses.iloc[idx]['fullname'],
           'sim_type': 'HeaderNgramSimilarity',
           'sim_score': ngram_sim,
           'description': ''
@@ -123,7 +129,10 @@ def initial_match(filePath, processedData, licenses):
     full_text = licenses.iloc[idx]['processed_text']
     if full_text in processedData:
       exact_match_fulltext.append({
+        'start_line': startLine,
+        'end_line': endLine,
         'shortname': licenses.iloc[idx]['shortname'],
+        'fullname': licenses.iloc[idx]['fullname'],
         'sim_type': 'ExactFullText',
         'sim_score': 1.0,
         'description': ''
