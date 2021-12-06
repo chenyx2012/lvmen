@@ -104,7 +104,7 @@ class TFIDF(AtarashiAgent):
         'fullname': str(self.licenseList.iloc[result]['fullname']),
         'sim_type': "Sum of TF-IDF score",
         'sim_score': sim_score,
-        'desc': "Score can be greater than 1 also"
+        # 'desc': "Score can be greater than 1 also"
       })
     score_arr.sort(key=lambda x: x['sim_score'], reverse=True)
     matches = list(itertools.chain(matches, score_arr[:5]))
@@ -150,7 +150,7 @@ class TFIDF(AtarashiAgent):
           'fullname': str(self.licenseList.iloc[counter]['fullname']),
           'sim_type': "TF-IDF Cosine Sim",
           'sim_score': sim_score,
-          'desc': ''
+          # 'desc': ''
         })
     matches.sort(key=lambda x: x['sim_score'], reverse=True)
     if self.verbose > 0:

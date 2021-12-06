@@ -88,7 +88,7 @@ def main():
                     return_code |= 4
 
                 result = list(result)
-                result = {"file": os.path.abspath(inputPath), "licenses": result}
+                result = { "licenses": result}
                 result = json.dumps(result, sort_keys=False, ensure_ascii=False, indent=4)
                 print(result + "\n")
 
@@ -108,7 +108,7 @@ def main():
                                       e.encoding + "'"]
                             return_code |= 4
                         result = list(result)
-                        result = {"file": os.path.abspath(fpath), "results": result}
+                        result = {"results": result}
                         if printComma:
                             print(",", end="")
                         else:

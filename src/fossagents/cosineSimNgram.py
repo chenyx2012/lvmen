@@ -143,7 +143,7 @@ class NgramAgent(AtarashiAgent):
             'fullname': self.licenseList.iloc[idx]['fullname'],
             'sim_type': 'CosineSim',
             'sim_score': cosineSim,
-            'description': ''
+            # 'description': ''
           })
         if self.verbose > 0:
           print("Cosine Sim ", str(cosineSim), self.licenseList.iloc[idx]['shortname'])
@@ -160,7 +160,7 @@ class NgramAgent(AtarashiAgent):
             'fullname': self.licenseList.iloc[idx]['fullname'],
             'sim_type': 'DiceSim',
             'sim_score': diceSim,
-            'description': ''
+            # 'description': ''
           })
         if self.verbose > 0:
           print("Dice Sim ", str(diceSim), self.licenseList.iloc[idx]['shortname'])
@@ -177,7 +177,7 @@ class NgramAgent(AtarashiAgent):
             'fullname': self.licenseList.iloc[idx]['fullname'],
             'sim_type': 'BigramCosineSim',
             'sim_score': bigram_cosine_sim,
-            'description': ''
+            # 'description': ''
           })
           if self.verbose > 0:
             print("Bigram Cosine Sim ", str(bigram_cosine_sim), self.licenseList.iloc[idx]['shortname'])

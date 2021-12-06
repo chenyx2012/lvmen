@@ -84,7 +84,7 @@ class WordFrequencySimilarity(AtarashiAgent):
           "fullname": str(self.licenseList.at[result, 'fullname']),
           "sim_score": 1,
           "sim_type": "wordFrequencySimilarity",
-          "description": ""
+          # "description": ""
         }]
 
       else:
@@ -97,7 +97,7 @@ class WordFrequencySimilarity(AtarashiAgent):
             "fullname": str(license['fullname']),
             "sim_score": 1,
             "sim_type": "wordFrequencySimilarity",
-            "description": "exact match"
+            # "description": "exact match"
           })
         return result
     elif method == 'text':
@@ -138,18 +138,18 @@ class WordFrequencySimilarity(AtarashiAgent):
         "end_line": "",
         "shortname": str(self.licenseList.at[result, 'shortname']),
         "fullname":str(self.licenseList.at[result, 'fullname']),
-        "text":str(self.licenseList.at[result, 'text']),
-        "license_header":str(self.licenseList.at[result, 'license_header']),
-        "url":str(self.licenseList.at[result, 'url']),
-        "deprecated":str(self.licenseList.at[result, 'deprecated']),
-        "osi_approved":str(self.licenseList.at[result, 'osi_approved']),
-        "isException":str(self.licenseList.at[result, 'isException']),
-        "processed_fullname":str(self.licenseList.at[result, 'processed_fullname']),
-        "processed_header":str(self.licenseList.at[result, 'processed_header']),
-        "processed_text":str(self.licenseList.at[result, 'processed_text']),
+        # "text":str(self.licenseList.at[result, 'text']),
+        # "license_header":str(self.licenseList.at[result, 'license_header']),
+        # "url":str(self.licenseList.at[result, 'url']),
+        # "deprecated":str(self.licenseList.at[result, 'deprecated']),
+        # "osi_approved":str(self.licenseList.at[result, 'osi_approved']),
+        # "isException":str(self.licenseList.at[result, 'isException']),
+        # "processed_fullname":str(self.licenseList.at[result, 'processed_fullname']),
+        # "processed_header":str(self.licenseList.at[result, 'processed_header']),
+        # "processed_text":str(self.licenseList.at[result, 'processed_text']),
         "sim_score": 1,
         "sim_type": "wordFrequencySimilarity",
-        "description": ""
+        # "description": ""
       }]
 
 if __name__ == "__main__":

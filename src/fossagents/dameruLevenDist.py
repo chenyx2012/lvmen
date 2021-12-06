@@ -66,7 +66,7 @@ class DameruLevenDist(AtarashiAgent):
           "fullname": str(self.licenseList.at[result, 'fullname']),
           "sim_score": 1,
           "sim_type": "dld",
-          "description": ""
+          # "description": ""
         }]
       else:
         result = []
@@ -78,7 +78,7 @@ class DameruLevenDist(AtarashiAgent):
             "fullname": str(license['fullname']),
             "sim_score": 1,
             "sim_type": "dld",
-            "description": "exact match"
+            # "description": "exact match"
           })
         return result
     elif method == 'text':
@@ -103,7 +103,7 @@ class DameruLevenDist(AtarashiAgent):
         "fullname": str(self.licenseList.at[result, 'fullname']),
         "sim_score": 1,
         "sim_type": "dld",
-        "description": ""
+        # "description": ""
       }]
 
 if __name__ == "__main__":
