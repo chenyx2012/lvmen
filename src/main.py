@@ -51,11 +51,7 @@ def main():
         inputPath = args.inputPath
         if os.path.isfile(inputPath):
             result = api.get_licenses(inputPath)
-            copy = api.get_copyrights(inputPath)
-            file = api.get_file_info(inputPath)
             print(result)
-            print(copy)
-            print(file)
         else:
             print("Error: Can not understand '" + inputPath + "'. Please enter a " +
                   "correct path or a directory")
