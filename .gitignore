@@ -1,4 +1,4 @@
 *.pyc
 !index.pyc
 /target/
-.idea
+.idea/
