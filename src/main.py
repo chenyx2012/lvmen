@@ -10,6 +10,7 @@ import argparse
 from fossscan.atarashii import build_scanner_obj, run_scan, __version__
 from scancode import api
 
+
 def main():
     '''
     Calls atarashii_runner / scancode / file_diff
@@ -43,7 +44,6 @@ def main():
 
     args = parser.parse_args()
     agent_name = args.agent_name
-
 
     return_code = 0
     # 判断算法
@@ -88,7 +88,7 @@ def main():
                     return_code |= 4
 
                 result = list(result)
-                result = { "licenses": result}
+                result = {"licenses": result}
                 result = json.dumps(result, sort_keys=False, ensure_ascii=False, indent=4)
                 print(result + "\n")
 
@@ -133,7 +133,9 @@ def main():
     # print("useTime : %.2f" % (end - start))
     return return_code
 
+
 if __name__ == '__main__':
     import sys
+
     sys.path.append(os.path.dirname(sys.path[0]))
     main()

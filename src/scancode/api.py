@@ -233,6 +233,7 @@ def _licenses_data_from_match(
 
 SCANCODE_DEBUG_PACKAGE_API = os.environ.get('SCANCODE_DEBUG_PACKAGE_API', False)
 
+
 def get_file_info(location, **kwargs):
     """
     Return a mapping of file information collected for the file at `location`.

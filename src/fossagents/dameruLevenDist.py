@@ -33,8 +33,8 @@ __email__ = "amanjain5221@gmail.com"
 
 class DameruLevenDist(AtarashiAgent):
 
-  def scan(self, filePath, method):
-    '''
+    def scan(self, filePath, method):
+        '''
     Read the content content of filename, extract the comments and preprocess them.
     Find the Damerau Levenshtein distance between the preprocessed file content
     and the license text.
@@ -42,82 +42,83 @@ class DameruLevenDist(AtarashiAgent):
     :param filePath: Path of the file to scan
     :return: Returns the license's short name with least damerau levenshtien distance
     '''
-    if method == 'file':
-      processedData, startLine, endLine = super().loadFile(filePath)
+        if method == 'file':
+            processedData, startLine, endLine = super().loadFile(filePath)
 
-      temp = exactMatcher(processedData, self.licenseList)
-      if temp == -1:
-        # Classify the license with minimum distance with scanned file
-        globalDistance = sys.maxsize
-        result = 0
-        for idx in range(len(self.licenseList)):
-          distance = damerau_levenshtein_distance(processedData.split(" "),
-                                                  self.licenseList.iloc[idx]['processed_text'].split(" "))
-          if self.verbose > 0:
-            print(str(idx) + "  " + self.licenseList.iloc[idx]['shortname'] + "  " + str(distance))
-          if distance < globalDistance:
-            globalDistance = distance
-            result = idx
+            temp = exactMatcher(processedData, self.licenseList)
+            if temp == -1:
+                # Classify the license with minimum distance with scanned file
+                globalDistance = sys.maxsize
+                result = 0
+                for idx in range(len(self.licenseList)):
+                    distance = damerau_levenshtein_distance(processedData.split(" "),
+                                                            self.licenseList.iloc[idx]['processed_text'].split(" "))
+                    if self.verbose > 0:
+                        print(str(idx) + "  " + self.licenseList.iloc[idx]['shortname'] + "  " + str(distance))
+                    if distance < globalDistance:
+                        globalDistance = distance
+                        result = idx
 
-        return [{
-          "start_line": startLine,
-          "end_line": endLine,
-          "shortname": str(self.licenseList.iloc[result]['shortname']),
-          "fullname": str(self.licenseList.at[result, 'fullname']),
-          "sim_score": 1,
-          "sim_type": "dld",
-          # "description": ""
-        }]
-      else:
-        result = []
-        for license in temp:
-          result.append({
-            "start_line": startLine,
-            "end_line": endLine,
-            "shortname": str(license['shortname']),
-            "fullname": str(license['fullname']),
-            "sim_score": 1,
-            "sim_type": "dld",
-            # "description": "exact match"
-          })
-        return result
-    elif method == 'text':
-      licenseText = filePath.replace('\n', ' ')
-      licenseText = CommentPreprocessor.preprocess(licenseText)
-      # Classify the license with minimum distance with scanned file
-      globalDistance = sys.maxsize
-      result = 0
-      for idx in range(len(self.licenseList)):
-        distance = damerau_levenshtein_distance(licenseText.split(" "),
-                                                self.licenseList.iloc[idx]['processed_text'].split(" "))
-        if self.verbose > 0:
-          print(str(idx) + "  " + self.licenseList.iloc[idx]['shortname'] + "  " + str(distance))
-        if distance < globalDistance:
-          globalDistance = distance
-          result = idx
+                return [{
+                    "start_line": startLine,
+                    "end_line": endLine,
+                    "shortname": str(self.licenseList.iloc[result]['shortname']),
+                    "fullname": str(self.licenseList.at[result, 'fullname']),
+                    "sim_score": 1,
+                    "sim_type": "dld",
+                    # "description": ""
+                }]
+            else:
+                result = []
+                for license in temp:
+                    result.append({
+                        "start_line": startLine,
+                        "end_line": endLine,
+                        "shortname": str(license['shortname']),
+                        "fullname": str(license['fullname']),
+                        "sim_score": 1,
+                        "sim_type": "dld",
+                        # "description": "exact match"
+                    })
+                return result
+        elif method == 'text':
+            licenseText = filePath.replace('\n', ' ')
+            licenseText = CommentPreprocessor.preprocess(licenseText)
+            # Classify the license with minimum distance with scanned file
+            globalDistance = sys.maxsize
+            result = 0
+            for idx in range(len(self.licenseList)):
+                distance = damerau_levenshtein_distance(licenseText.split(" "),
+                                                        self.licenseList.iloc[idx]['processed_text'].split(" "))
+                if self.verbose > 0:
+                    print(str(idx) + "  " + self.licenseList.iloc[idx]['shortname'] + "  " + str(distance))
+                if distance < globalDistance:
+                    globalDistance = distance
+                    result = idx
 
-      return [{
-        "start_line": "",
-        "end_line": "",
-        "shortname": str(self.licenseList.iloc[result]['shortname']),
-        "fullname": str(self.licenseList.at[result, 'fullname']),
-        "sim_score": 1,
-        "sim_type": "dld",
-        # "description": ""
-      }]
+            return [{
+                "start_line": "",
+                "end_line": "",
+                "shortname": str(self.licenseList.iloc[result]['shortname']),
+                "fullname": str(self.licenseList.at[result, 'fullname']),
+                "sim_score": 1,
+                "sim_type": "dld",
+                # "description": ""
+            }]
+
 
 if __name__ == "__main__":
-  print("The file has been run directly")
-  parser = argparse.ArgumentParser()
-  parser.add_argument("inputFile", help="Specify the input file which needs to be scanned")
-  parser.add_argument("processedLicenseList",
-                      help="Specify the processed license list file which contains licenses")
-  parser.add_argument("-v", "--verbose", help="increase output verbosity",
-                      action="count", default=0)
-  args = parser.parse_args()
-  filename = args.inputFile
-  licenseList = args.processedLicenseList
-  verbose = args.verbose
+    print("The file has been run directly")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("inputFile", help="Specify the input file which needs to be scanned")
+    parser.add_argument("processedLicenseList",
+                        help="Specify the processed license list file which contains licenses")
+    parser.add_argument("-v", "--verbose", help="increase output verbosity",
+                        action="count", default=0)
+    args = parser.parse_args()
+    filename = args.inputFile
+    licenseList = args.processedLicenseList
+    verbose = args.verbose
 
-  scanner = DameruLevenDist(licenseList, verbose=verbose)
-  print("License Detected using Dameru Leven Distance: " + str(scanner.scan(filename)))
+    scanner = DameruLevenDist(licenseList, verbose=verbose)
+    print("License Detected using Dameru Leven Distance: " + str(scanner.scan(filename)))
