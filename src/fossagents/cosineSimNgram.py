@@ -191,6 +191,7 @@ class NgramAgent(AtarashiAgent):
             matches = list(itertools.chain(matches, Bigram_cosine_matches))
 
         matches.sort(key=lambda x: x['sim_score'], reverse=True)
+        matches = matches[0:5]
         return matches
 
     def getSimAlgo(self):

@@ -151,6 +151,7 @@ class TFIDF(AtarashiAgent):
                     # 'desc': ''
                 })
         matches.sort(key=lambda x: x['sim_score'], reverse=True)
+        matches = matches[:5]
         if self.verbose > 0:
             print("time taken is " + str(time.time() - startTime) + " sec")
         return matches
