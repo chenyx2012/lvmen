@@ -135,7 +135,8 @@ def get_licenses(location, min_score=0,
                 license_text_diagnostics=license_text_diagnostics,
                 license_url_template=license_url_template)
         )
-
+        # break 用来过滤scancode的多个结果
+        break
     percentage_of_license_text = 0
     if match:
         # we need at least one match to compute a license_coverage
@@ -180,8 +181,8 @@ def _licenses_data_from_match(
         detected_licenses.append(result)
         result['start_line'] = match.start_line
         result['end_line'] = match.end_line
-        result['shortname'] = lic.short_name
-        result['fullname'] = lic.name
+        result['spdx_license_identifier'] = lic.spdx_license_key
+        result['name'] = lic.name
         result['sim_score'] = match.score()
         result['sim_type'] = "scancode"
 

@@ -138,8 +138,8 @@ class NgramAgent(AtarashiAgent):
                     Cosine_matches.append({
                         'start_line': startLine,
                         'end_line': endLine,
-                        'shortname': self.licenseList.iloc[idx]['shortname'],
-                        'fullname': self.licenseList.iloc[idx]['fullname'],
+                        'spdx_license_identifier': self.licenseList.iloc[idx]['shortname'],
+                        'name': self.licenseList.iloc[idx]['fullname'],
                         'sim_type': 'CosineSim',
                         'sim_score': cosineSim,
                         # 'description': ''
@@ -155,8 +155,8 @@ class NgramAgent(AtarashiAgent):
                     Dice_matches.append({
                         'start_line': startLine,
                         'end_line': endLine,
-                        'shortname': self.licenseList.iloc[idx]['shortname'],
-                        'fullname': self.licenseList.iloc[idx]['fullname'],
+                        'spdx_license_identifier': self.licenseList.iloc[idx]['shortname'],
+                        'name': self.licenseList.iloc[idx]['fullname'],
                         'sim_type': 'DiceSim',
                         'sim_score': diceSim,
                         # 'description': ''
@@ -172,8 +172,8 @@ class NgramAgent(AtarashiAgent):
                     Bigram_cosine_matches.append({
                         'start_line': startLine,
                         'end_line': endLine,
-                        'shortname': self.licenseList.iloc[idx]['shortname'],
-                        'fullname': self.licenseList.iloc[idx]['fullname'],
+                        'spdx_license_identifier': self.licenseList.iloc[idx]['shortname'],
+                        'name': self.licenseList.iloc[idx]['fullname'],
                         'sim_type': 'BigramCosineSim',
                         'sim_score': bigram_cosine_sim,
                         # 'description': ''

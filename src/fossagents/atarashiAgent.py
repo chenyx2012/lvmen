@@ -68,6 +68,8 @@ def exactMatcher(licenseText, licenses):
         raise ValueError('The license list does not contain processed_text column.')
 
     for idx in range(len(licenses)):
+        if licenses.iloc[idx]['processed_text'] == '':
+            continue
         if licenses.iloc[idx]['processed_text'] in licenseText and licenses.iloc[idx]['shortname'] != 'Void':
             license = {
                 "shortname": licenses.iloc[idx]['shortname'],

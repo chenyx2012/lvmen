@@ -99,15 +99,15 @@ class TFIDF(AtarashiAgent):
             score_arr.append({
                 'start_line': startLine,
                 'end_line': endLine,
-                'shortname': str(self.licenseList.iloc[result]['shortname']),
-                'fullname': str(self.licenseList.iloc[result]['fullname']),
+                'spdx_license_identifier': str(self.licenseList.iloc[result]['shortname']),
+                'name': str(self.licenseList.iloc[result]['fullname']),
                 'sim_type': "Sum of TF-IDF score",
                 'sim_score': sim_score,
                 # 'desc': "Score can be greater than 1 also"
             })
+        matches.sort(key=lambda x: x['sim_score'], reverse=True)
         score_arr.sort(key=lambda x: x['sim_score'], reverse=True)
         matches = list(itertools.chain(matches, score_arr[:5]))
-        matches.sort(key=lambda x: x['sim_score'], reverse=True)
         if self.verbose > 0:
             print("time taken is " + str(time.time() - startTime) + " sec")
         return matches
@@ -144,8 +144,8 @@ class TFIDF(AtarashiAgent):
                 matches.append({
                     'start_line': startLine,
                     'end_line': endLine,
-                    'shortname': str(self.licenseList.iloc[counter]['shortname']),
-                    'fullname': str(self.licenseList.iloc[counter]['fullname']),
+                    'spdx_license_identifier': str(self.licenseList.iloc[counter]['shortname']),
+                    'name': str(self.licenseList.iloc[counter]['fullname']),
                     'sim_type': "TF-IDF Cosine Sim",
                     'sim_score': sim_score,
                     # 'desc': ''
@@ -173,15 +173,6 @@ class TFIDF(AtarashiAgent):
 
 
 if __name__ == "__main__":
-    text = ["Chinese Beijing Chinese",
-            "Chinese Chinese Shanghai",
-            "Chinese Macao",
-            "Tokyo Japan Chinese"]
-    tv = TfidfVectorizer(use_idf=True, smooth_idf=True, norm=None)
-    tv_fit = tv.fit_transform(text)
-    print(tv.get_feature_names())
-    print(tv_fit)
-
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--tfidf_similarity", required=False,
                         default="ScoreSim",

@@ -79,8 +79,8 @@ class WordFrequencySimilarity(AtarashiAgent):
                 return [{
                     "start_line": startLine,
                     "end_line": endLine,
-                    "shortname": str(self.licenseList.at[result, 'shortname']),
-                    "fullname": str(self.licenseList.at[result, 'fullname']),
+                    "spdx_license_identifier": str(self.licenseList.at[result, 'shortname']),
+                    "name": str(self.licenseList.at[result, 'fullname']),
                     "sim_score": 1,
                     "sim_type": "wordFrequencySimilarity",
                     # "description": ""
@@ -92,8 +92,8 @@ class WordFrequencySimilarity(AtarashiAgent):
                     result.append({
                         "start_line": startLine,
                         "end_line": endLine,
-                        "shortname": str(license['shortname']),
-                        "fullname": str(license['fullname']),
+                        "spdx_license_identifier": str(license['shortname']),
+                        "name": str(license['fullname']),
                         "sim_score": 1,
                         "sim_type": "wordFrequencySimilarity",
                         # "description": "exact match"
@@ -135,8 +135,8 @@ class WordFrequencySimilarity(AtarashiAgent):
             return [{
                 "start_line": "",
                 "end_line": "",
-                "shortname": str(self.licenseList.at[result, 'shortname']),
-                "fullname": str(self.licenseList.at[result, 'fullname']),
+                "spdx_license_identifier": str(self.licenseList.at[result, 'shortname']),
+                "name": str(self.licenseList.at[result, 'fullname']),
                 # "text":str(self.licenseList.at[result, 'text']),
                 # "license_header":str(self.licenseList.at[result, 'license_header']),
                 # "url":str(self.licenseList.at[result, 'url']),

@@ -62,8 +62,8 @@ class DameruLevenDist(AtarashiAgent):
                 return [{
                     "start_line": startLine,
                     "end_line": endLine,
-                    "shortname": str(self.licenseList.iloc[result]['shortname']),
-                    "fullname": str(self.licenseList.at[result, 'fullname']),
+                    "spdx_license_identifier": str(self.licenseList.iloc[result]['shortname']),
+                    "name": str(self.licenseList.at[result, 'fullname']),
                     "sim_score": 1,
                     "sim_type": "dld",
                     # "description": ""
@@ -74,8 +74,8 @@ class DameruLevenDist(AtarashiAgent):
                     result.append({
                         "start_line": startLine,
                         "end_line": endLine,
-                        "shortname": str(license['shortname']),
-                        "fullname": str(license['fullname']),
+                        "spdx_license_identifier": str(license['shortname']),
+                        "name": str(license['fullname']),
                         "sim_score": 1,
                         "sim_type": "dld",
                         # "description": "exact match"
@@ -99,8 +99,8 @@ class DameruLevenDist(AtarashiAgent):
             return [{
                 "start_line": "",
                 "end_line": "",
-                "shortname": str(self.licenseList.iloc[result]['shortname']),
-                "fullname": str(self.licenseList.at[result, 'fullname']),
+                "spdx_license_identifier": str(self.licenseList.iloc[result]['shortname']),
+                "name": str(self.licenseList.at[result, 'fullname']),
                 "sim_score": 1,
                 "sim_type": "dld",
                 # "description": ""
