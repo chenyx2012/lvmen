@@ -109,7 +109,6 @@ def initial_match(filePath, processedData, licenses, startLine, endLine):
           'name': licenses.iloc[idx]['fullname'],
           'sim_type': 'ExactHeader',
           'sim_score': 1.0,
-          'description': ''
         })
       ngram_sim = HeadersNgramSim(header, processedData)
       if ngram_sim >= 0.7:
@@ -120,7 +119,6 @@ def initial_match(filePath, processedData, licenses, startLine, endLine):
           'name': licenses.iloc[idx]['fullname'],
           'sim_type': 'HeaderNgramSimilarity',
           'sim_score': ngram_sim,
-          'description': ''
         })
 
   # match with full text
@@ -135,7 +133,6 @@ def initial_match(filePath, processedData, licenses, startLine, endLine):
         'name': licenses.iloc[idx]['fullname'],
         'sim_type': 'ExactFullText',
         'sim_score': 1.0,
-        'description': ''
       })
 
   matches = list(itertools.chain(spdx_identifiers, exact_match_header, exact_match_fulltext, header_sim_match[:5]))
