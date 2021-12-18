@@ -80,8 +80,11 @@ class License(object):
 
     __attrib = partial(attr.ib, repr=False)
 
+
     # mandatory unique key: lower case ASCII characters, digits, underscore and dots.
     key = attr.ib(repr=True)
+
+    id = __attrib(default=False)
 
     src_dir = __attrib(default=licenses_data_dir)
 
@@ -480,6 +483,7 @@ def load_licenses(licenses_data_dir=licenses_data_dir , with_deprecated=False):
     for data_file in sorted(all_files):
         if data_file.endswith('.yml'):
             key = file_base_name(data_file)
+            # if key == 'apache-1.0':
             lic = License(key=key, src_dir=licenses_data_dir)
             used_files.add(data_file)
             if exists(lic.text_file):
@@ -487,6 +491,7 @@ def load_licenses(licenses_data_dir=licenses_data_dir , with_deprecated=False):
             if not with_deprecated and lic.is_deprecated:
                 continue
             licenses[key] = lic
+
 
     dangling = all_files.difference(used_files)
     if dangling:
