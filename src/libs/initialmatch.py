@@ -105,8 +105,8 @@ def initial_match(filePath, processedData, licenses, startLine, endLine):
         exact_match_header.append({
           'start_line': startLine,
           'end_line': endLine,
-          'shortname': licenses.iloc[idx]['shortname'],
-          'fullname': licenses.iloc[idx]['fullname'],
+          'spdx_license_identifier': licenses.iloc[idx]['shortname'],
+          'name': licenses.iloc[idx]['fullname'],
           'sim_type': 'ExactHeader',
           'sim_score': 1.0,
           'description': ''
@@ -116,8 +116,8 @@ def initial_match(filePath, processedData, licenses, startLine, endLine):
         header_sim_match.append({
           'start_line': startLine,
           'end_line': endLine,
-          'shortname': licenses.iloc[idx]['shortname'],
-          'fullname': licenses.iloc[idx]['fullname'],
+          'spdx_license_identifier': licenses.iloc[idx]['shortname'],
+          'name': licenses.iloc[idx]['fullname'],
           'sim_type': 'HeaderNgramSimilarity',
           'sim_score': ngram_sim,
           'description': ''
@@ -131,8 +131,8 @@ def initial_match(filePath, processedData, licenses, startLine, endLine):
       exact_match_fulltext.append({
         'start_line': startLine,
         'end_line': endLine,
-        'shortname': licenses.iloc[idx]['shortname'],
-        'fullname': licenses.iloc[idx]['fullname'],
+        'spdx_license_identifier': licenses.iloc[idx]['shortname'],
+        'name': licenses.iloc[idx]['fullname'],
         'sim_type': 'ExactFullText',
         'sim_score': 1.0,
         'description': ''
