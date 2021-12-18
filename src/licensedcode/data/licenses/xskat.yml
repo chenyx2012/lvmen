@@ -17,3 +17,4 @@ notes: |
     displays it (x.y-z). Just add a dummy .0 to the end of the version then
     increment the Release field like any other package.
 spdx_license_key: XSkat
+id: 679

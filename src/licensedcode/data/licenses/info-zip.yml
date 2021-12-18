@@ -13,3 +13,4 @@ ignorable_holders:
     - Info-ZIP.
 ignorable_urls:
     - ftp://ftp.cdrom.com/pub/infozip/license.html
+id: 860

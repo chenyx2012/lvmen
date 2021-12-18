@@ -122,7 +122,7 @@ class NgramAgent(AtarashiAgent):
             for x in guess['shortname']:
                 ngram_guesses.append(x)
 
-        all_guesses = unique([l['shortname'] for l in matches])
+        all_guesses = unique([l['spdx_license_identifier'] for l in matches])
         self.licenseList = self.licenseList[(self.licenseList.shortname.isin(ngram_guesses)) |
                                             (self.licenseList.shortname.isin(all_guesses))]
         self.licenseList.sort_values('shortname').reset_index(drop=True)

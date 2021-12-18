@@ -13,3 +13,4 @@ minimum_coverage: 30
 ignorable_urls:
     - https://creativecommons.org/
     - https://creativecommons.org/compatiblelicenses
+id: 795
