@@ -176,14 +176,16 @@ def _licenses_data_from_match(
 
     detected_licenses = []
     for license_key in match.rule.license_keys():
+        score = match.score() / 100
         lic = licenses.get(license_key)
         result = {}
         detected_licenses.append(result)
+        result['id'] = lic.id
         result['start_line'] = match.start_line
         result['end_line'] = match.end_line
         result['spdx_license_identifier'] = lic.spdx_license_key
         result['name'] = lic.name
-        result['sim_score'] = match.score()
+        result['sim_score'] = score
         result['sim_type'] = "scancode"
 
         # result['key'] = lic.key
