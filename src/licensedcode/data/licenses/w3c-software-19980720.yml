@@ -17,3 +17,4 @@ ignorable_urls:
     - http://www.w3.org/Consortium/Legal/
 ignorable_emails:
     - site-policy@w3.org
+id: 973
