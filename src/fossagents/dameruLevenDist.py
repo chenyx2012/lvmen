@@ -24,14 +24,10 @@ from asyncore import loop
 from audioop import mul
 from glob import glob
 import multiprocessing
-from multiprocessing.pool import ThreadPool
 import os
 import sys
-import threading
 
 from pyxdameraulevenshtein import damerau_levenshtein_distance
-from sqlalchemy import null
-from tqdm import tqdm
 
 from libs.commentPreprocessor import CommentPreprocessor
 from fossagents.atarashiAgent import AtarashiAgent, exactMatcher
@@ -65,7 +61,6 @@ class DameruLevenDist(AtarashiAgent):
                 cpuCount = os.cpu_count()
                 threads = cpuCount/2 
                 pool = multiprocessing.Pool(int(threads))
-                # pool = ThreadPool(threads)
                 resultList = pool.map(DameruLevenDist.dldLicense, [(idx,processedData,self.licenseList) for idx in range(len(self.licenseList))])
 
                 # for idx in range(len(self.licenseList)):
@@ -132,11 +127,6 @@ class DameruLevenDist(AtarashiAgent):
         distance = damerau_levenshtein_distance(processedData.split(" "),licenseList.iloc[idx]['processed_text'].split(" "))
         licenseDict = {'idx': idx,
                    'distance': distance}
-        # if self.verbose > 0:
-        #     print(self.license.get('shortname') + "  " + str(distance))
-        # if distance < globalDistance:
-        #     globalDistance = distance
-        #     result = idx
 
         return licenseDict
 
