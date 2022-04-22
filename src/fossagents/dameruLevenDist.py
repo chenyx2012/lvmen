@@ -20,9 +20,18 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 """
 
 import argparse
+from asyncore import loop
+from audioop import mul
+from glob import glob
+import multiprocessing
+from multiprocessing.pool import ThreadPool
+import os
 import sys
+import threading
 
 from pyxdameraulevenshtein import damerau_levenshtein_distance
+from sqlalchemy import null
+from tqdm import tqdm
 
 from libs.commentPreprocessor import CommentPreprocessor
 from fossagents.atarashiAgent import AtarashiAgent, exactMatcher
@@ -30,6 +39,9 @@ from fossagents.atarashiAgent import AtarashiAgent, exactMatcher
 __author__ = "Aman Jain"
 __email__ = "amanjain5221@gmail.com"
 
+# result = multiprocessing.Value("i", 0)
+# globalDistance = multiprocessing.Value("i", sys.maxsize)
+# lock = multiprocessing.Lock()
 
 class DameruLevenDist(AtarashiAgent):
 
@@ -48,16 +60,25 @@ class DameruLevenDist(AtarashiAgent):
             temp = exactMatcher(processedData, self.licenseList)
             if temp == -1:
                 # Classify the license with minimum distance with scanned file
-                globalDistance = sys.maxsize
                 result = 0
-                for idx in range(len(self.licenseList)):
-                    distance = damerau_levenshtein_distance(processedData.split(" "),
-                                                            self.licenseList.iloc[idx]['processed_text'].split(" "))
+                globalDistance = sys.maxsize
+                cpuCount = os.cpu_count()
+                threads = cpuCount/2 
+                pool = multiprocessing.Pool(int(threads))
+                # pool = ThreadPool(threads)
+                resultList = pool.map(DameruLevenDist.dldLicense, [(idx,processedData,self.licenseList) for idx in range(len(self.licenseList))])
+
+                # for idx in range(len(self.licenseList)):
+                #     distance = damerau_levenshtein_distance(processedData.split(" "),
+                #                                             self.licenseList.iloc[idx]['processed_text'].split(" "))
+                for idx in range(len(resultList)):
+                    distance = resultList[idx]['distance']
+                 
                     if self.verbose > 0:
-                        print(str(idx) + "  " + self.licenseList.iloc[idx]['shortname'] + "  " + str(distance))
+                        print(str(resultList[idx]['idx']) + "  " + self.licenseList.iloc[resultList[idx]['idx']]['shortname'] + "  " + str(distance))
                     if distance < globalDistance:
                         globalDistance = distance
-                        result = idx
+                        result = resultList[idx]['idx'] 
 
                 return [{
                     "start_line": startLine,
@@ -105,6 +126,20 @@ class DameruLevenDist(AtarashiAgent):
                 "sim_type": "dld",
                 # "description": ""
             }]
+
+    def dldLicense(args):
+        idx,processedData,licenseList = args
+        distance = damerau_levenshtein_distance(processedData.split(" "),licenseList.iloc[idx]['processed_text'].split(" "))
+        licenseDict = {'idx': idx,
+                   'distance': distance}
+        # if self.verbose > 0:
+        #     print(self.license.get('shortname') + "  " + str(distance))
+        # if distance < globalDistance:
+        #     globalDistance = distance
+        #     result = idx
+
+        return licenseDict
+
 
 
 if __name__ == "__main__":

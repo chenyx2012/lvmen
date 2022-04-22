@@ -6,7 +6,6 @@ import time
 from pkg_resources import resource_filename
 import argparse
 
-# from diff.text_diff import getFileDiff
 from fossscan.atarashii import build_scanner_obj, run_scan, __version__
 from scancode import api
 
@@ -15,7 +14,7 @@ def main():
     '''
     Calls atarashii_runner / scancode / file_diff
     '''
-    # start = time.time()
+    start = time.time()
     parser = argparse.ArgumentParser()
     defaultProcessed = resource_filename("src", "data/licenses/processedLicenses.csv")
     defaultJSON = resource_filename("src", "data/Ngram_keywords.json")
@@ -129,8 +128,8 @@ def main():
         else:
             print("Error: Please select method from file and text")
 
-    # end = time.time()
-    # print("useTime : %.2f" % (end - start))
+    end = time.time()
+    print("useTime : %.2f" % (end - start))
     return return_code
 
 
