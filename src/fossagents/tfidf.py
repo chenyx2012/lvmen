@@ -97,6 +97,7 @@ class TFIDF(AtarashiAgent):
                                         start=0):
             sim_score = sum(value)
             score_arr.append({
+                'id': str(self.licenseList.iloc[result]['id']),
                 'start_line': startLine,
                 'end_line': endLine,
                 'spdx_license_identifier': str(self.licenseList.iloc[result]['shortname']),
@@ -142,6 +143,7 @@ class TFIDF(AtarashiAgent):
             sim_score = self.__cosine_similarity(value, search_martix)
             if sim_score >= 0.3:
                 matches.append({
+                    'id': str(self.licenseList.iloc[counter]['id']),
                     'start_line': startLine,
                     'end_line': endLine,
                     'spdx_license_identifier': str(self.licenseList.iloc[counter]['shortname']),

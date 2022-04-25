@@ -136,6 +136,7 @@ class NgramAgent(AtarashiAgent):
                     wordFrequency(processedData.split(" ")))
                 if cosineSim >= 0.6:
                     Cosine_matches.append({
+                        'id': str(self.licenseList.iloc[idx]['id']),
                         'start_line': startLine,
                         'end_line': endLine,
                         'spdx_license_identifier': self.licenseList.iloc[idx]['shortname'],
@@ -153,6 +154,7 @@ class NgramAgent(AtarashiAgent):
                                                 processedData.split(" "))
                 if diceSim >= 0.6:
                     Dice_matches.append({
+                        'id': str(self.licenseList.iloc[idx]['id']),
                         'start_line': startLine,
                         'end_line': endLine,
                         'spdx_license_identifier': self.licenseList.iloc[idx]['shortname'],
@@ -170,6 +172,7 @@ class NgramAgent(AtarashiAgent):
                     wordFrequency(self.__bigram_tokenize(processedData)))
                 if bigram_cosine_sim >= 0.9:
                     Bigram_cosine_matches.append({
+                        'id': str(self.licenseList.iloc[idx]['id']),
                         'start_line': startLine,
                         'end_line': endLine,
                         'spdx_license_identifier': self.licenseList.iloc[idx]['shortname'],

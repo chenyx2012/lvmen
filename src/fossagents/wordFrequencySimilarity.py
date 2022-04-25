@@ -77,6 +77,7 @@ class WordFrequencySimilarity(AtarashiAgent):
                 if self.verbose > 0:
                     print("Result is license with ID", result)
                 return [{
+                    "id": str(self.licenseList.at[result, 'id']),
                     "start_line": startLine,
                     "end_line": endLine,
                     "spdx_license_identifier": str(self.licenseList.at[result, 'shortname']),
@@ -90,6 +91,7 @@ class WordFrequencySimilarity(AtarashiAgent):
                 result = []
                 for license in temp:
                     result.append({
+                        "id": license['id'],
                         "start_line": startLine,
                         "end_line": endLine,
                         "spdx_license_identifier": str(license['shortname']),
@@ -133,6 +135,7 @@ class WordFrequencySimilarity(AtarashiAgent):
             if self.verbose > 0:
                 print("Result is license with ID", result)
             return [{
+                "id": str(self.licenseList.at[result, 'id']),
                 "start_line": "",
                 "end_line": "",
                 "spdx_license_identifier": str(self.licenseList.at[result, 'shortname']),
