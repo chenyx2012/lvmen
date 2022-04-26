@@ -91,7 +91,7 @@ class WordFrequencySimilarity(AtarashiAgent):
                 result = []
                 for license in temp:
                     result.append({
-                        "id": license['id'],
+                        "id": str(license['id']),
                         "start_line": startLine,
                         "end_line": endLine,
                         "spdx_license_identifier": str(license['shortname']),
