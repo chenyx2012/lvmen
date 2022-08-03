@@ -23,6 +23,7 @@ __author__ = "Aman Jain"
 __email__ = "amanjain5221@gmail.com"
 
 import argparse
+import csv
 import re
 
 from libs.commentPreprocessor import CommentPreprocessor
@@ -50,6 +51,8 @@ class WordFrequencySimilarity(AtarashiAgent):
                 # create array of frequency array of licenses
                 licensesFrequency = []
                 for idx in range(len(self.licenseList)):
+                    if str(self.licenseList.at[idx, 'shortname']) == 'BSD-2-Clause':
+                        print(' ')
                     license = self.licenseList.at[idx, 'processed_text']
                     # 统计出现次数
                     licensesFrequency.append(wordFrequency(re.findall(r'\b[a-z]{3,15}\b', license)))
@@ -74,6 +77,10 @@ class WordFrequencySimilarity(AtarashiAgent):
                     if globalCount < tempCount:
                         result = idx
                         globalCount = tempCount
+                totalCount = 0
+                for word, freq in licensesFrequency[result].items(): 
+                    totalCount += freq
+                score = globalCount / totalCount
                 if self.verbose > 0:
                     print("Result is license with ID", result)
                 return [{
@@ -82,7 +89,7 @@ class WordFrequencySimilarity(AtarashiAgent):
                     "end_line": endLine,
                     "spdx_license_identifier": str(self.licenseList.at[result, 'shortname']),
                     "name": str(self.licenseList.at[result, 'fullname']),
-                    "sim_score": 1,
+                    "sim_score": score,
                     "sim_type": "wordFrequencySimilarity",
                     # "description": ""
                 }]
