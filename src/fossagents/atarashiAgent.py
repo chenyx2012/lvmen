@@ -72,6 +72,7 @@ def exactMatcher(licenseText, licenses):
             continue
         if licenses.iloc[idx]['processed_text'] in licenseText and licenses.iloc[idx]['shortname'] != 'Void':
             license = {
+                "id" : licenses.iloc[idx]['id'],
                 "shortname": licenses.iloc[idx]['shortname'],
                 "fullname": licenses.iloc[idx]['fullname'],
             }

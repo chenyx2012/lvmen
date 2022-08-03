@@ -6,7 +6,6 @@ import time
 from pkg_resources import resource_filename
 import argparse
 
-# from diff.text_diff import getFileDiff
 from fossscan.atarashii import build_scanner_obj, run_scan, __version__
 from scancode import api
 

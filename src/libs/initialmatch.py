@@ -103,6 +103,7 @@ def initial_match(filePath, processedData, licenses, startLine, endLine):
     if len(header) > 0:
       if header in processedData:
         exact_match_header.append({
+          'id': str(licenses.iloc[idx]['id']),
           'start_line': startLine,
           'end_line': endLine,
           'spdx_license_identifier': licenses.iloc[idx]['shortname'],
@@ -113,6 +114,7 @@ def initial_match(filePath, processedData, licenses, startLine, endLine):
       ngram_sim = HeadersNgramSim(header, processedData)
       if ngram_sim >= 0.7:
         header_sim_match.append({
+          'id': str(licenses.iloc[idx]['id']),
           'start_line': startLine,
           'end_line': endLine,
           'spdx_license_identifier': licenses.iloc[idx]['shortname'],
@@ -127,6 +129,7 @@ def initial_match(filePath, processedData, licenses, startLine, endLine):
     full_text = licenses.iloc[idx]['processed_text']
     if full_text in processedData:
       exact_match_fulltext.append({
+        'id': str(licenses.iloc[idx]['id']),
         'start_line': startLine,
         'end_line': endLine,
         'spdx_license_identifier': licenses.iloc[idx]['shortname'],
